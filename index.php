@@ -51,7 +51,7 @@ GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON">
 
 <?php
 
-if($_POST["LEDon"])
+if(isset($_POST["LEDon"])) 
 {
 $a= exec("sudo python /var/www/html/led_on.py");
 echo $a;
