@@ -1,0 +1,44 @@
+#include <LiquidCrystal.h>
+const int trig = 4;
+const int echo = 5;
+const int led = 6;
+const int led2 = 7;
+LiquidCrystal lcd(11, 12, 2, 9, 10, 3);
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+pinMode(trig, OUTPUT);
+pinMode(echo, INPUT);
+pinMode(led, OUTPUT);
+pinMode(led2, OUTPUT);
+lcd.begin(16, 2);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+long duration, distance;
+digitalWrite(trig, LOW);
+delayMicroseconds(2);
+digitalWrite(trig, HIGH);
+delayMicroseconds(10);
+digitalWrite(trig, LOW);
+duration = pulseIn(echo, HIGH);
+distance = (duration/2)/29.1;
+if (distance < 40) {
+  digitalWrite(led, HIGH);
+  digitalWrite(led2, LOW);
+}  else {
+  digitalWrite(led, LOW);
+  digitalWrite(led2, HIGH);
+}
+  lcd.setCursor(0, 0);
+  lcd.print("Codebender");
+}
+
+
+
+
+
+

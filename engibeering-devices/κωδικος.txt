@@ -1,0 +1,56 @@
+#include <Keypad.h> 
+
+const byte seira= 4; 
+const byte stili=4; 
+
+char kwdikos[seira][stili]=
+{
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+
+byte seiraPins[seira] = {9,8,7,6};
+byte stiliPins[stili] = {5,4,3,2};
+
+Keypad pliktrologio= Keypad(makeKeymap(kwdikos), seiraPins, stiliPins, seira, stili);
+
+const int P[] = {0,0,0,7};
+int code[4];
+
+void setup() {
+  // put your setup code here, to run once:
+Serial.begin(9600);
+}
+
+void loop() {
+
+ bool check = true;
+ int i; 
+ 
+ for (i=1;i<=4;i++){
+  Serial.println("Give me key digit");
+  char keypressed = pliktrologio.getKey();
+
+  if (keypressed != NO_KEY){
+    
+    code[i] = keypressed;
+  }
+ }
+ for (i=1;i<=4;i++){
+  if (code[i]!=P[i]){
+    check = false;
+  }
+ }
+ if (check = true){
+  Serial.println("correct password");
+  delay(4000);
+ }else{
+  Serial.println("incorrect password");
+  
+ }
+
+}
+ 
+ 

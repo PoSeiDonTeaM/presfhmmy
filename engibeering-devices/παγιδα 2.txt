@@ -1,0 +1,53 @@
+const int led = 4; 
+const int sensor = 5;
+int state;
+int switchState;
+byte old = LOW;
+bool armed;
+
+void setup() {
+  // put your setup code here, to run once
+
+pinMode(sensor, INPUT_PULLUP);
+pinMode(6, INPUT_PULLUP);
+pinMode(led, OUTPUT);
+pinMode(3, OUTPUT);
+pinMode(2, OUTPUT);
+pinMode(7, OUTPUT);
+armed = false ; 
+digitalWrite (3, HIGH);
+}
+
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+switchState = digitalRead(6); 
+
+if (switchState != old)
+{ old = switchState;
+  armed = !armed;
+  }
+
+state = digitalRead(sensor);
+
+if (armed == true){
+   
+       digitalWrite (7, HIGH);
+    
+    if (state == HIGH){
+       digitalWrite (led, HIGH);
+       digitalWrite (3, LOW);
+}
+
+else
+
+   
+
+{ digitalWrite (7, LOW);
+  digitalWrite (led, LOW);
+  digitalWrite (3, HIGH);
+
+   }
+     }
+       }

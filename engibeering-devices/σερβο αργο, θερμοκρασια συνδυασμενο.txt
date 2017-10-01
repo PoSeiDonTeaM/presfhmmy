@@ -1,0 +1,120 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#include <Servo.h>
+
+
+#define ONE_WIRE_BUS 12
+#define relay_input 7
+
+Servo servo1;
+
+int servoPin = 5;
+int fan = 8;
+byte humiditypin = A1;
+byte humidityvcc = 6;
+int servoAngle;
+ 
+
+OneWire oneWire(ONE_WIRE_BUS);
+ 
+DallasTemperature sensors(&oneWire);
+
+int reading() {
+  digitalWrite(humidityvcc, HIGH);
+  delay(500);
+  int val = analogRead(humiditypin);
+  digitalWrite(humidityvcc, LOW);
+  return 1023-val;
+  }
+  
+void setup()
+{
+ 
+  pinMode(humidityvcc, OUTPUT);
+  digitalWrite(humidityvcc, LOW);
+  pinMode(fan,OUTPUT);
+  pinMode(relay_input, OUTPUT);
+  while(!Serial);
+  delay(1000);
+  Serial.begin(9600);
+  servo1.attach(servoPin);
+  servo1.write(0); 
+  
+  sensors.begin();
+
+  
+  pinMode(fan,OUTPUT);
+  pinMode(relay_input, OUTPUT);
+
+
+  
+                                    
+  
+}
+
+void loop() { 
+ 
+ 
+  
+  Serial.print("Requesting temperatures...");
+  sensors.requestTemperatures(); 
+  Serial.println("DONE");
+  Serial.print("Temperature for the device 1 (index 0) is: ");
+  Serial.println(sensors.getTempCByIndex(0));
+
+  int x = map(reading() , 0 ,765 , 0, 100);
+  Serial.print("Humidity is: ");
+  Serial.print(x);
+  Serial.println("%"); 
+  
+  if (sensors.getTempCByIndex(0) <= 30){
+    digitalWrite(relay_input,HIGH);
+    Serial.println("Green Light");
+    Serial.println("Heater on");
+    delay(100);
+    }
+    
+    else if(sensors.getTempCByIndex(0) > 30){
+    digitalWrite(relay_input,LOW);
+    Serial.println("No Light");
+    Serial.println("Heater off");
+    delay(100);
+    }
+    
+    
+    if(sensors.getTempCByIndex(0) >= 31)
+    {
+    digitalWrite(8,LOW);
+    Serial.println("Fan on");
+    delay(100);
+    }
+    
+    if(sensors.getTempCByIndex(0) < 31)
+    {
+    digitalWrite(8,HIGH);
+    Serial.println("Fan off");
+    delay(100);}
+
+
+
+  
+
+if (x <= 10){ 
+    if (servoAngle <100) {
+    for(servoAngle = 0; servoAngle  <= 100 ; servoAngle++) 
+    {                                
+    servo1.write(servoAngle);          
+    delay(20);
+    }
+}}
+else {
+   if (servoAngle >0) {
+   for(servoAngle = 100; servoAngle > 0; servoAngle--)  {                                
+    servo1.write(servoAngle);          
+    delay(20);
+      }}
+}
+
+
+
+}

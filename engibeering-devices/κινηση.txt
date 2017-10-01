@@ -1,0 +1,39 @@
+
+
+int led = 13;
+int input = 12;
+int pirState = LOW; 
+int val = 0;
+
+
+
+void setup() {
+  // put your setup code here, to run once:
+pinMode(led, OUTPUT);
+pinMode(input, INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+ val = digitalRead(input);
+
+ if (val == HIGH)
+{
+  digitalWrite(led, HIGH);
+  if (pirState==LOW) {
+    Serial.println("Motion!");
+    pirState = HIGH;
+    delay(10);
+  }
+  }
+  else{ digitalWrite(led,LOW);
+  if (pirState ==HIGH) { 
+    Serial.println("No Motion");
+    pirState = LOW;
+    delay(10);
+  }
+  }
+  }
+  
+  
+
