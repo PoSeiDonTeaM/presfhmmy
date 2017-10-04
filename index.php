@@ -37,8 +37,9 @@ color: #aaa;
 <body>
 <p><div id='title'>Engibeering Science</div><hr> </p>
 
-<form action="" method="POST">
-GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON">
+
+<form action="" method="post">
+GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON"></form>
 
 </form>
 <button class='button button2'>LED Off</button>
@@ -47,15 +48,19 @@ GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON">
 
 
 </body>
-</html>
+
 
 <?php
 
 if(isset($_POST["LEDon"])) 
 {
-$a= exec("sudo python /var/www/html/led_on.py");
-echo $a;
-  echo 45;
+$a = escapeshellcmd("sudo -u www-data python /var/www/html/led_on.py");
+$output = shell_exec($a);
+echo $output;
+echo 3;
 }
 
 ?>
+
+
+</html>
