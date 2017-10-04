@@ -52,6 +52,11 @@ GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON"></form>
 
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', true);
+
+echo 4;
+
 if(isset($_POST["LEDon"])) 
 {
 $a = escapeshellcmd("sudo -u www-data python /var/www/html/led_on.py");
@@ -59,6 +64,7 @@ $output = shell_exec($a);
 echo $output;
 echo 3;
 }
+echo 5;
 
 ?>
 
