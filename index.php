@@ -57,9 +57,9 @@ ini_set('display_errors', true);
 
 echo 4;
 
-if(isset($_POST["LEDon"])) 
+if($_POST["LEDon"])
 {
-$a = escapeshellcmd("sudo -u www-data python /var/www/html/led_on.py");
+$a = escapeshellcmd("sudo python /var/www/html/led_on.py");
 $output = shell_exec($a);
 echo $output;
 echo 3;
