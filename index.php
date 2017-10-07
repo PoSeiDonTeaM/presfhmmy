@@ -1,23 +1,31 @@
 <html>
 <head>
-<title>Engibeering Science </title>
+<title>House Control </title>
 
 <style>
 
 body{
-background-color: #666;
+background-color: #fff;
 }
 
 .button{
-background-color: #222;
+background-color: #259;
 border-color:white;
 color: white;
 padding: 20px;
 text-align: center;
 display: inline-block;
 font-size: 16px;
-margin-left: 50px;
-margin-top:50px;
+margin-left: 700px;
+margin-top: 100px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+#outside_door{
+margin-left: 200px;
+margin-bottom: -33px;
+width: 80px;
+height:80px;
 }
 
 
@@ -25,7 +33,7 @@ margin-top:50px;
 
 font-size: 50px;
 text-align:center;
-color: #aaa;
+color: #222;
 
 }
 
@@ -35,14 +43,15 @@ color: #aaa;
 </head>
 
 <body>
-<p><div id='title'>Engibeering Science</div><hr> </p>
+<p><div id='title'>House Control</div><hr> </p>
 
 
-<form action="" method="post">
-GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON"></form>
+<form action="" method="post">&nbsp;<input class="button" type="submit" name="LEDon" value="Open the Outside Door"><img id="outside_door" src="outside_door.png"> </form>
 
-</form>
-<button class='button button2'>LED Off</button>
+
+
+
+<!-- <button class='button button2'>LED Off</button> -->
 
 
 
@@ -51,6 +60,7 @@ GPIO 17&nbsp;<input type="submit" name="LEDon" value="ON"></form>
 
 
 <?php
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', true);
