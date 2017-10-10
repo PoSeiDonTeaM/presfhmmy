@@ -52,7 +52,7 @@ font-size:36px;
 width: 250px;
 height: 250px;
 font-size:36px;
-margin-left:50px;
+margin-left:100px;
 }
 
 .onclick_time{
@@ -73,6 +73,11 @@ height:200px;
 
 }
 
+.images{
+width:200px;
+height:200px;
+display: inline-block;
+}
 
 
 #title{
@@ -94,9 +99,19 @@ color: #259;
 
 <form action="" method="post">&nbsp;<input class="button button1" type="submit" name="LEDon" value="Open the Outside Door"><img id="outside_door" src="outside_door.png"> </form>
 
-<form action="" method="post">&nbsp;<input class="button button2" type="submit" name="room_light_on" value="Lights ON"> </form>
 
-<form action="" method="post">&nbsp;<input class="button button3" type="submit" name="room_light_off" value="Lights OFF">  </form>
+<div class="onclick_time">
+<?php
+
+	$date_clicked = date('Y-m-d H:i:s');
+	echo "Last time door opened by server: " . $date_clicked . "<br>";
+
+?>	</div>
+
+
+<form action="" method="post">&nbsp;<input class="button button2" type="submit" name="room_light_on" value="Lights ON"> 
+
+<input class="button button3" type="submit" name="room_light_off" value="Lights OFF"></form> //<img id="outside_door" src="light-bulb-off.png">
 
 <!-- <button class='button button2'>LED Off</button> -->
 
@@ -118,22 +133,36 @@ if($_POST["LEDon"])
 {
 $a = escapeshellcmd("sudo python /var/www/html/led_on.py");
 $output = shell_exec($a);
-echo $output;
+
 }
+
+if($_POST["room_light_on"])
+{
+$btn = system('gpio write 3 1');
+}
+elseif($_POST["room_light_off"])
+{
+$btn = system('gpio write 3 0');
+}
+
+
+$btn_read = system('gpio read 3');
+
+if($btn_read == 1){
+
+$image = "light-bulb-on";
+
+}
+elseif($btn_read == 0)
+{
+$image = "light-bulb-off";
+}
+
+echo '<img src="'. $image .'.png" class="images" title="light-bulb-off" />';
 
 ?>
 
-<div class="onclick_time">
 
-<?php
-
-if(isset($_POST["LEDon"]))
-{
-	$date_clicked = date('Y-m-d H:i:s');;
-	echo "Last time door opened by server: " . $date_clicked . "<br>";
-}
-
-?> </div>
 
 
 </html>
